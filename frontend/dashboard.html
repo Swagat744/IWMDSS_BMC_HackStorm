@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IWMDSS - Intelligent Waste Management Decision Support System</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            overflow-x: hidden;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+        const { Bell, User, Download, Search, TrendingUp, TrendingDown, AlertTriangle, Calendar, Navigation, Zap } = {
+            Bell: ({ size, color, style }) => (
+                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color || "currentColor"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={style}>
+                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                    <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                </svg>
+            ),
+            User: ({ size, color }) => (
+                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color || "currentColor"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+            ),
+            Download: ({ size, color }) => (
+                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color || "currentColor"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+            ),
+            Search: ({ size, color, style }) => (
+                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color || "currentColor"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={style}>
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+            ),
+            TrendingUp: ({ size, color }) => (
+                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color || "currentColor"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                    <polyline points="17 6 23 6 23 12"></polyline>
+                </svg>
+            ),
+            TrendingDown: ({ size, color }) => (
+                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color || "currentColor"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="23 18 13.5 8.5 8.5 13.5 1 6"></polyline>
+                    <polyline points="17 18 23 18 23 12"></polyline>
+                </svg>
+            ),
+            AlertTriangle: ({ size, color, style }) => (
+                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color || "currentColor"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={style}>
+                    <path d="m21.73 18-8-14a2 2 0 0 0-3.46 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path>
+                    <line x1="12" y1="9" x2="12" y2="13"></line>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+            ),
+            Calendar: ({ size, color }) => (
+                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color || "currentColor"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+            ),
+            Navigation: ({ size, color }) => (
+                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color || "currentColor"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+                </svg>
+            ),
+            Zap: ({ size, color }) => (
+                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color || "currentColor"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                </svg>
+            )
+        };
+
+        const IWMDSSDashboard = () => {
+          const [activeMode, setActiveMode] = useState('normal');
+          const [selectedWard, setSelectedWard] = useState('all');
+          const [activeTab, setActiveTab] = useState('recommendations');
+
+          const summaryCards = [
+            { label: 'Total Waste Collected', value: '8,472', unit: 'tons', trend: '+3.2%', trendUp: true, icon: '🗑️' },
+            { label: 'Wards Needing Attention', value: '3', unit: 'wards', trend: '-1', trendUp: false, icon: '⚠️' },
+            { label: 'Pending Complaints', value: '12', unit: 'pending', trend: '-8', trendUp: false, icon: '📋' },
+            { label: 'Active Emergencies', value: '2', unit: 'ongoing', trend: '+1', trendUp: true, icon: '🚨' },
+            { label: 'Upcoming Events', value: '1', unit: 'major event', trend: '6 days', trendUp: null, icon: '📅' },
+            { label: 'Risk Index', value: 'Medium', unit: 'prediction', trend: 'Stable', trendUp: null, icon: '📊' }
+          ];
+
+          const wards = [
+            { name: 'Ward A', status: 'normal', waste: 320, complaints: 2, trucks: 8, risk: 'Low', color: '#4ade80' },
+            { name: 'Ward B', status: 'watch', waste: 385, complaints: 4, trucks: 7, risk: 'Low', color: '#fbbf24' },
+            { name: 'Ward C', status: 'normal', waste: 290, complaints: 1, trucks: 6, risk: 'Low', color: '#4ade80' },
+            { name: 'Ward D', status: 'rising', waste: 502, complaints: 8, trucks: 8, risk: 'Medium', color: '#fb923c' },
+            { name: 'Ward E', status: 'normal', waste: 310, complaints: 2, trucks: 7, risk: 'Low', color: '#4ade80' },
+            { name: 'Ward F', status: 'urgent', waste: 615, complaints: 12, trucks: 6, risk: 'High', color: '#ef4444' },
+            { name: 'Ward G', status: 'watch', waste: 420, complaints: 7, trucks: 9, risk: 'Low', color: '#fbbf24' },
+            { name: 'Ward H', status: 'normal', waste: 295, complaints: 3, trucks: 8, risk: 'Low', color: '#4ade80' },
+            { name: 'Ward J', status: 'rising', waste: 488, complaints: 6, trucks: 7, risk: 'Medium', color: '#fb923c' },
+            { name: 'Ward K', status: 'urgent', waste: 680, complaints: 15, trucks: 5, risk: 'High', color: '#ef4444' },
+            { name: 'Ward L', status: 'rising', waste: 480, complaints: 9, trucks: 7, risk: 'Medium', color: '#fb923c' },
+            { name: 'Ward M', status: 'normal', waste: 275, complaints: 1, trucks: 9, risk: 'Low', color: '#4ade80' },
+            { name: 'Ward N', status: 'normal', waste: 305, complaints: 2, trucks: 8, risk: 'Low', color: '#4ade80' },
+            { name: 'Ward P', status: 'watch', waste: 420, complaints: 7, trucks: 9, risk: 'Low', color: '#fbbf24' },
+            { name: 'Ward R', status: 'normal', waste: 340, complaints: 4, trucks: 10, risk: 'Low', color: '#4ade80' },
+            { name: 'Ward S', status: 'normal', waste: 315, complaints: 3, trucks: 8, risk: 'Low', color: '#4ade80' },
+            { name: 'Ward T', status: 'normal', waste: 285, complaints: 2, trucks: 7, risk: 'Low', color: '#4ade80' },
+            { name: 'Ward V', status: 'rising', waste: 515, complaints: 10, trucks: 7, risk: 'Medium', color: '#fb923c' },
+            { name: 'Ward X', status: 'normal', waste: 298, complaints: 1, trucks: 8, risk: 'Low', color: '#4ade80' },
+            { name: 'Ward Z', status: 'normal', waste: 312, complaints: 2, trucks: 9, risk: 'Low', color: '#4ade80' }
+          ];
+
+          const recommendations = [
+            { 
+              action: 'Deploy 2 extra trucks to Ward K', 
+              priority: 'CRITICAL', 
+              details: 'Waste accumulation 45% above threshold',
+              resources: '2 Additional Trucks'
+            },
+            { 
+              action: 'Increase collection frequency at Dadar Market', 
+              priority: 'HIGH', 
+              details: 'Complaint spike detected in this zone',
+              resources: '1 Additional Route'
+            },
+            { 
+              action: 'Prepare extra bins in Ward D', 
+              priority: 'MEDIUM', 
+              details: 'Major event scheduled in 6 days',
+              resources: '50 Extra Bins'
+            },
+            { 
+              action: 'Reallocate 4 workers from Ward R to Ward L', 
+              priority: 'MEDIUM', 
+              details: 'Ward L showing increased demand',
+              resources: '4 Workers'
+            }
+          ];
+
+          const alerts = [
+            { text: 'Ward F waste level rising (+22%)', type: 'warning', time: '5 min ago' },
+            { text: 'Emergency flood alert in Kurla', type: 'emergency', time: '12 min ago' },
+            { text: 'Complaint spike detected in Dadar Market', type: 'info', time: '1 hour ago' },
+            { text: 'Event coming: Ganesh Chaturthi', type: 'event', time: '6 days' }
+          ];
+
+          const wasteData = [
+            { day: 'Mon', value: 8234 },
+            { day: 'Tue', value: 8456 },
+            { day: 'Wed', value: 8312 },
+            { day: 'Thu', value: 8589 },
+            { day: 'Fri', value: 8423 },
+            { day: 'Sat', value: 8701 },
+            { day: 'Sun', value: 8472 }
+          ];
+
+          const complaintsData = [
+            { day: 'Mon', value: 18 },
+            { day: 'Tue', value: 22 },
+            { day: 'Wed', value: 16 },
+            { day: 'Thu', value: 28 },
+            { day: 'Fri', value: 24 },
+            { day: 'Sat', value: 19 },
+            { day: 'Sun', value: 12 }
+          ];
+
+          return (
+            <div style={{
+              minHeight: '100vh',
+              background: 'linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%)',
+              fontFamily: '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+              color: '#1e293b'
+            }}>
+              {/* Header */}
+              <header style={{
+                background: 'linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%)',
+                padding: '0.75rem 2rem',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                position: 'sticky',
+                top: 0,
+                zIndex: 1000
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                  <div style={{
+                    width: '48px',
+                    height: '48px',
+                    background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
+                    borderRadius: '12px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '24px',
+                    fontWeight: '900',
+                    color: 'white',
+                    boxShadow: '0 4px 12px rgba(59, 130, 246, 0.4)'
+                  }}>
+                    IW
+                  </div>
+                  <div>
+                    <div style={{ fontSize: '1.25rem', fontWeight: '700', color: 'white', letterSpacing: '-0.02em' }}>IWMDSS</div>
+                    <div style={{ fontSize: '0.75rem', color: '#bfdbfe', fontWeight: '500' }}>Brihanmumbai Municipal Corporation</div>
+                  </div>
+                </div>
+
+                <nav style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                  {[
+                    { name: 'Dashboard', page: 'dashboard.html' },
+                    { name: 'Events', page: 'events.html' },
+                    { name: 'Emergencies', page: 'emergencies.html' },
+                    { name: 'Hotspots', page: 'hotspots.html' }
+                  ].map((tab) => (
+                    <a
+                      key={tab.name}
+                      href={tab.page}
+                      style={{
+                        padding: '0.625rem 1.25rem',
+                        background: tab.name === 'Dashboard' ? 'rgba(255,255,255,0.2)' : 'transparent',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '8px',
+                        cursor: 'pointer',
+                        fontSize: '0.9rem',
+                        fontWeight: tab.name === 'Dashboard' ? '600' : '500',
+                        transition: 'all 0.2s',
+                        backdropFilter: tab.name === 'Dashboard' ? 'blur(10px)' : 'none',
+                        textDecoration: 'none',
+                        display: 'inline-block'
+                      }}
+                      onMouseEnter={(e) => {
+                        if (tab.name !== 'Dashboard') {
+                          e.currentTarget.style.background = 'rgba(255,255,255,0.1)';
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        if (tab.name !== 'Dashboard') {
+                          e.currentTarget.style.background = 'transparent';
+                        }
+                      }}
+                    >
+                      {tab.name}
+                    </a>
+                  ))}
+                </nav>
+
+                <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                  <div style={{ position: 'relative' }}>
+                    <input
+                      type="text"
+                      placeholder="Search ward / hotspot / ID"
+                      style={{
+                        padding: '0.625rem 1rem 0.625rem 2.5rem',
+                        borderRadius: '8px',
+                        border: '1px solid rgba(255,255,255,0.2)',
+                        background: 'rgba(255,255,255,0.15)',
+                        color: 'white',
+                        fontSize: '0.875rem',
+                        width: '280px',
+                        outline: 'none',
+                        backdropFilter: 'blur(10px)'
+                      }}
+                    />
+                    <Search size={18} style={{ position: 'absolute', left: '0.75rem', top: '50%', transform: 'translateY(-50%)', color: '#bfdbfe' }} />
+                  </div>
+                  <button style={{
+                    background: 'rgba(255,255,255,0.15)',
+                    border: '1px solid rgba(255,255,255,0.2)',
+                    borderRadius: '8px',
+                    padding: '0.625rem',
+                    cursor: 'pointer',
+                    position: 'relative',
+                    backdropFilter: 'blur(10px)'
+                  }}>
+                    <Bell size={20} color="white" />
+                    <span style={{
+                      position: 'absolute',
+                      top: '4px',
+                      right: '4px',
+                      width: '8px',
+                      height: '8px',
+                      background: '#ef4444',
+                      borderRadius: '50%',
+                      border: '2px solid #1e3a8a'
+                    }} />
+                  </button>
+                  <button style={{
+                    background: 'rgba(255,255,255,0.15)',
+                    border: '1px solid rgba(255,255,255,0.2)',
+                    borderRadius: '8px',
+                    padding: '0.625rem',
+                    cursor: 'pointer',
+                    backdropFilter: 'blur(10px)'
+                  }}>
+                    <User size={20} color="white" />
+                  </button>
+                  <button style={{
+                    background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
+                    border: 'none',
+                    borderRadius: '8px',
+                    padding: '0.625rem 1.25rem',
+                    color: 'white',
+                    fontSize: '0.875rem',
+                    fontWeight: '600',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    boxShadow: '0 4px 12px rgba(59, 130, 246, 0.3)'
+                  }}>
+                    <Download size={16} />
+                    Download Report
+                  </button>
+                </div>
+              </header>
+
+              <div style={{ display: 'flex', height: 'calc(100vh - 80px)' }}>
+                {/* Left Sidebar */}
+                <aside style={{
+                  width: '280px',
+                  background: 'white',
+                  padding: '1.5rem',
+                  boxShadow: '4px 0 12px rgba(0,0,0,0.05)',
+                  overflowY: 'auto'
+                }}>
+                  <div style={{ marginBottom: '2rem' }}>
+                    <h3 style={{ fontSize: '0.875rem', fontWeight: '700', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '1rem' }}>
+                      Operation Mode
+                    </h3>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                      {[
+                        { id: 'normal', label: 'Normal Operations', icon: '📊' },
+                        { id: 'event', label: 'Event Planning', icon: '📅' },
+                        { id: 'emergency', label: 'Emergency Response', icon: '🚨' }
+                      ].map((mode) => (
+                        <button
+                          key={mode.id}
+                          onClick={() => setActiveMode(mode.id)}
+                          style={{
+                            padding: '0.875rem 1rem',
+                            background: activeMode === mode.id ? 'linear-gradient(135deg, #10b981 0%, #059669 100%)' : '#f8fafc',
+                            color: activeMode === mode.id ? 'white' : '#475569',
+                            border: activeMode === mode.id ? 'none' : '2px solid #e2e8f0',
+                            borderRadius: '10px',
+                            cursor: 'pointer',
+                            fontSize: '0.875rem',
+                            fontWeight: '600',
+                            textAlign: 'left',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '0.75rem',
+                            transition: 'all 0.2s',
+                            boxShadow: activeMode === mode.id ? '0 4px 12px rgba(16, 185, 129, 0.3)' : 'none'
+                          }}
+                        >
+                          <span style={{ fontSize: '1.25rem' }}>{mode.icon}</span>
+                          {mode.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <h3 style={{ fontSize: '0.875rem', fontWeight: '700', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '1rem' }}>
+                      Filters
+                    </h3>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                      <div>
+                        <label style={{ fontSize: '0.75rem', fontWeight: '600', color: '#64748b', marginBottom: '0.5rem', display: 'block' }}>
+                          Select Ward
+                        </label>
+                        <select
+                          value={selectedWard}
+                          onChange={(e) => setSelectedWard(e.target.value)}
+                          style={{
+                            width: '100%',
+                            padding: '0.625rem',
+                            borderRadius: '8px',
+                            border: '2px solid #e2e8f0',
+                            fontSize: '0.875rem',
+                            background: 'white',
+                            cursor: 'pointer'
+                          }}
+                        >
+                          <option value="all">All Wards</option>
+                          {wards.map(ward => (
+                            <option key={ward.name} value={ward.name}>{ward.name}</option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <div>
+                        <label style={{ fontSize: '0.75rem', fontWeight: '600', color: '#64748b', marginBottom: '0.5rem', display: 'block' }}>
+                          Complaint Type
+                        </label>
+                        <select style={{
+                          width: '100%',
+                          padding: '0.625rem',
+                          borderRadius: '8px',
+                          border: '2px solid #e2e8f0',
+                          fontSize: '0.875rem',
+                          background: 'white',
+                          cursor: 'pointer'
+                        }}>
+                          <option>All Types</option>
+                          <option>Collection Delay</option>
+                          <option>Bin Overflow</option>
+                          <option>Illegal Dumping</option>
+                        </select>
+                      </div>
+
+                      <div>
+                        <label style={{ fontSize: '0.75rem', fontWeight: '600', color: '#64748b', marginBottom: '0.5rem', display: 'block' }}>
+                          Date Range
+                        </label>
+                        <select style={{
+                          width: '100%',
+                          padding: '0.625rem',
+                          borderRadius: '8px',
+                          border: '2px solid #e2e8f0',
+                          fontSize: '0.875rem',
+                          background: 'white',
+                          cursor: 'pointer'
+                        }}>
+                          <option>Today</option>
+                          <option>Last 7 Days</option>
+                          <option>Last 30 Days</option>
+                        </select>
+                      </div>
+
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginTop: '0.5rem' }}>
+                        {[
+                          { label: 'Show only wards needing attention', checked: false },
+                          { label: 'Show hotspots', checked: true },
+                          { label: 'Show active emergencies', checked: true }
+                        ].map((toggle, idx) => (
+                          <label key={idx} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', cursor: 'pointer', fontSize: '0.875rem' }}>
+                            <input
+                              type="checkbox"
+                              defaultChecked={toggle.checked}
+                              style={{
+                                width: '18px',
+                                height: '18px',
+                                cursor: 'pointer',
+                                accentColor: '#3b82f6'
+                              }}
+                            />
+                            <span style={{ color: '#475569' }}>{toggle.label}</span>
+                          </label>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </aside>
+
+                {/* Main Content */}
+                <main style={{ flex: 1, overflowY: 'auto', padding: '2rem' }}>
+                  {/* Summary Cards */}
+                  <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(6, 1fr)',
+                    gap: '1rem',
+                    marginBottom: '2rem'
+                  }}>
+                    {summaryCards.map((card, idx) => (
+                      <div
+                        key={idx}
+                        style={{
+                          background: 'white',
+                          borderRadius: '12px',
+                          padding: '1.25rem',
+                          boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+                          border: '1px solid #f1f5f9',
+                          transition: 'all 0.2s'
+                        }}
+                      >
+                        <div style={{ fontSize: '1.75rem', marginBottom: '0.5rem' }}>{card.icon}</div>
+                        <div style={{ fontSize: '1.75rem', fontWeight: '700', color: '#1e293b', marginBottom: '0.25rem' }}>
+                          {card.value}
+                        </div>
+                        <div style={{ fontSize: '0.75rem', color: '#64748b', marginBottom: '0.5rem' }}>{card.unit}</div>
+                        <div style={{ fontSize: '0.75rem', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+                          {card.trendUp === true && <TrendingUp size={14} color="#10b981" />}
+                          {card.trendUp === false && <TrendingDown size={14} color="#ef4444" />}
+                          <span style={{ color: card.trendUp === true ? '#10b981' : card.trendUp === false ? '#ef4444' : '#64748b' }}>
+                            {card.trend}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Map Section */}
+                  <div style={{
+                    background: 'white',
+                    borderRadius: '16px',
+                    padding: '1.5rem',
+                    boxShadow: '0 4px 16px rgba(0,0,0,0.08)',
+                    marginBottom: '2rem'
+                  }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+                      <div>
+                        <h2 style={{ fontSize: '1.5rem', fontWeight: '700', color: '#1e293b', marginBottom: '0.25rem' }}>
+                          Mumbai Ward Map
+                        </h2>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', fontSize: '0.875rem', color: '#64748b' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                            <span style={{ width: '8px', height: '8px', background: '#10b981', borderRadius: '50%', animation: 'pulse 2s infinite' }} />
+                            Live Mode
+                          </div>
+                          <span>Last updated: 2 min ago</span>
+                        </div>
+                      </div>
+                      <div style={{ display: 'flex', gap: '0.5rem' }}>
+                        <button style={{
+                          padding: '0.5rem 1rem',
+                          background: '#f8fafc',
+                          border: '2px solid #e2e8f0',
+                          borderRadius: '8px',
+                          fontSize: '0.875rem',
+                          cursor: 'pointer',
+                          fontWeight: '500'
+                        }}>
+                          🔍 Zoom In
+                        </button>
+                        <button style={{
+                          padding: '0.5rem 1rem',
+                          background: '#f8fafc',
+                          border: '2px solid #e2e8f0',
+                          borderRadius: '8px',
+                          fontSize: '0.875rem',
+                          cursor: 'pointer',
+                          fontWeight: '500'
+                        }}>
+                          🔍 Zoom Out
+                        </button>
+                        <button style={{
+                          padding: '0.5rem 1rem',
+                          background: '#f8fafc',
+                          border: '2px solid #e2e8f0',
+                          borderRadius: '8px',
+                          fontSize: '0.875rem',
+                          cursor: 'pointer',
+                          fontWeight: '500'
+                        }}>
+                          ↺ Reset View
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Ward Grid Map */}
+                    <div style={{
+                      position: 'relative',
+                      background: 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)',
+                      borderRadius: '12px',
+                      padding: '2rem',
+                      minHeight: '500px'
+                    }}>
+                      <div style={{
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(5, 1fr)',
+                        gridTemplateRows: 'repeat(4, 1fr)',
+                        gap: '1rem',
+                        height: '100%'
+                      }}>
+                        {wards.slice(0, 20).map((ward) => (
+                          <div
+                            key={ward.name}
+                            style={{
+                              background: ward.color,
+                              borderRadius: '12px',
+                              padding: '1rem',
+                              display: 'flex',
+                              flexDirection: 'column',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              cursor: 'pointer',
+                              transition: 'all 0.2s',
+                              boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                              border: '2px solid rgba(255,255,255,0.5)',
+                              position: 'relative'
+                            }}
+                            title={`${ward.name}: ${ward.waste} tons | ${ward.complaints} complaints | ${ward.trucks} trucks | Risk: ${ward.risk}`}
+                          >
+                            <div style={{ fontSize: '1.125rem', fontWeight: '700', color: 'white', textShadow: '0 2px 4px rgba(0,0,0,0.2)' }}>
+                              {ward.name}
+                            </div>
+                            {ward.status === 'urgent' && (
+                              <AlertTriangle size={20} color="white" style={{ position: 'absolute', top: '0.5rem', right: '0.5rem' }} />
+                            )}
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Legend */}
+                      <div style={{
+                        position: 'absolute',
+                        bottom: '1.5rem',
+                        left: '1.5rem',
+                        background: 'white',
+                        borderRadius: '12px',
+                        padding: '1rem',
+                        boxShadow: '0 4px 16px rgba(0,0,0,0.15)'
+                      }}>
+                        <div style={{ fontSize: '0.875rem', fontWeight: '700', marginBottom: '0.75rem', color: '#1e293b' }}>Legend</div>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                          {[
+                            { color: '#4ade80', label: 'Normal' },
+                            { color: '#fbbf24', label: 'Watch' },
+                            { color: '#fb923c', label: 'Rising Risk' },
+                            { color: '#ef4444', label: 'Urgent' }
+                          ].map((item) => (
+                            <div key={item.label} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8rem' }}>
+                              <div style={{ width: '16px', height: '16px', background: item.color, borderRadius: '4px' }} />
+                              <span>{item.label}</span>
+                            </div>
+                          ))}
+                          <div style={{ borderTop: '1px solid #e2e8f0', marginTop: '0.5rem', paddingTop: '0.5rem' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8rem', marginBottom: '0.25rem' }}>
+                              <AlertTriangle size={14} color="#ef4444" />
+                              <span>Emergency</span>
+                            </div>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8rem' }}>
+                              <Navigation size={14} color="#3b82f6" />
+                              <span>Hotspot</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Charts Section */}
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '2rem' }}>
+                    {/* Waste Collection Trend */}
+                    <div style={{
+                      background: 'white',
+                      borderRadius: '12px',
+                      padding: '1.5rem',
+                      boxShadow: '0 2px 8px rgba(0,0,0,0.08)'
+                    }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+                        <div>
+                          <h3 style={{ fontSize: '1.125rem', fontWeight: '700', color: '#1e293b', marginBottom: '0.25rem' }}>
+                            Waste Collection Trend
+                          </h3>
+                          <div style={{ fontSize: '0.875rem', color: '#64748b' }}>Last 7 days (tons)</div>
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.875rem', fontWeight: '600', color: '#10b981' }}>
+                          <TrendingUp size={16} />
+                          +5.2%
+                        </div>
+                      </div>
+                      <svg viewBox="0 0 400 200" style={{ width: '100%', height: 'auto' }}>
+                        <defs>
+                          <linearGradient id="wasteGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.3" />
+                            <stop offset="100%" stopColor="#3b82f6" stopOpacity="0.05" />
+                          </linearGradient>
+                        </defs>
+                        {/* Grid lines */}
+                        {[0, 1, 2, 3, 4].map((i) => (
+                          <line key={i} x1="40" y1={20 + i * 40} x2="380" y2={20 + i * 40} stroke="#e5e7eb" strokeWidth="1" />
+                        ))}
+                        {/* Area fill */}
+                        <path
+                          d={`M 60,${180 - (wasteData[0].value - 8000) / 10} ${wasteData.map((d, i) => `L ${60 + i * 53.33},${180 - (d.value - 8000) / 10}`).join(' ')} L 380,180 L 60,180 Z`}
+                          fill="url(#wasteGradient)"
+                        />
+                        {/* Line */}
+                        <polyline
+                          points={wasteData.map((d, i) => `${60 + i * 53.33},${180 - (d.value - 8000) / 10}`).join(' ')}
+                          fill="none"
+                          stroke="#3b82f6"
+                          strokeWidth="3"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        {/* Points */}
+                        {wasteData.map((d, i) => (
+                          <circle
+                            key={i}
+                            cx={60 + i * 53.33}
+                            cy={180 - (d.value - 8000) / 10}
+                            r="5"
+                            fill="white"
+                            stroke="#3b82f6"
+                            strokeWidth="3"
+                          />
+                        ))}
+                        {/* Labels */}
+                        {wasteData.map((d, i) => (
+                          <text key={i} x={60 + i * 53.33} y="195" textAnchor="middle" fontSize="11" fill="#64748b">
+                            {d.day}
+                          </text>
+                        ))}
+                      </svg>
+                    </div>
+
+                    {/* Complaints Trend */}
+                    <div style={{
+                      background: 'white',
+                      borderRadius: '12px',
+                      padding: '1.5rem',
+                      boxShadow: '0 2px 8px rgba(0,0,0,0.08)'
+                    }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+                        <div>
+                          <h3 style={{ fontSize: '1.125rem', fontWeight: '700', color: '#1e293b', marginBottom: '0.25rem' }}>
+                            Complaints Trend
+                          </h3>
+                          <div style={{ fontSize: '0.875rem', color: '#64748b' }}>Last 7 days</div>
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.875rem', fontWeight: '600', color: '#ef4444' }}>
+                          <TrendingDown size={16} />
+                          -8 today
+                        </div>
+                      </div>
+                      <svg viewBox="0 0 400 200" style={{ width: '100%', height: 'auto' }}>
+                        <defs>
+                          <linearGradient id="complaintsGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stopColor="#ef4444" stopOpacity="0.3" />
+                            <stop offset="100%" stopColor="#ef4444" stopOpacity="0.05" />
+                          </linearGradient>
+                        </defs>
+                        {/* Grid lines */}
+                        {[0, 1, 2, 3, 4].map((i) => (
+                          <line key={i} x1="40" y1={20 + i * 40} x2="380" y2={20 + i * 40} stroke="#e5e7eb" strokeWidth="1" />
+                        ))}
+                        {/* Area fill */}
+                        <path
+                          d={`M 60,${180 - complaintsData[0].value * 5} ${complaintsData.map((d, i) => `L ${60 + i * 53.33},${180 - d.value * 5}`).join(' ')} L 380,180 L 60,180 Z`}
+                          fill="url(#complaintsGradient)"
+                        />
+                        {/* Line */}
+                        <polyline
+                          points={complaintsData.map((d, i) => `${60 + i * 53.33},${180 - d.value * 5}`).join(' ')}
+                          fill="none"
+                          stroke="#ef4444"
+                          strokeWidth="3"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        {/* Points */}
+                        {complaintsData.map((d, i) => (
+                          <circle
+                            key={i}
+                            cx={60 + i * 53.33}
+                            cy={180 - d.value * 5}
+                            r="5"
+                            fill="white"
+                            stroke="#ef4444"
+                            strokeWidth="3"
+                          />
+                        ))}
+                        {/* Labels */}
+                        {complaintsData.map((d, i) => (
+                          <text key={i} x={60 + i * 53.33} y="195" textAnchor="middle" fontSize="11" fill="#64748b">
+                            {d.day}
+                          </text>
+                        ))}
+                      </svg>
+                    </div>
+                  </div>
+
+                  {/* Bottom Section */}
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '1.5rem' }}>
+                    {/* Top Wards by Waste */}
+                    <div style={{
+                      background: 'white',
+                      borderRadius: '12px',
+                      padding: '1.5rem',
+                      boxShadow: '0 2px 8px rgba(0,0,0,0.08)'
+                    }}>
+                      <h3 style={{ fontSize: '1.125rem', fontWeight: '700', color: '#1e293b', marginBottom: '0.5rem' }}>
+                        Top Wards by Waste
+                      </h3>
+                      <div style={{ fontSize: '0.875rem', color: '#64748b', marginBottom: '1.5rem' }}>Today's collection (tons)</div>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                        {wards.sort((a, b) => b.waste - a.waste).slice(0, 8).map((ward, idx) => (
+                          <div key={ward.name} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                            <div style={{ fontSize: '0.875rem', fontWeight: '600', color: '#94a3b8', minWidth: '20px' }}>{idx + 1}.</div>
+                            <div style={{ flex: 1 }}>
+                              <div style={{
+                                height: '28px',
+                                background: 'linear-gradient(90deg, #3b82f6 0%, #60a5fa 100%)',
+                                borderRadius: '6px',
+                                width: `${(ward.waste / 680) * 100}%`,
+                                display: 'flex',
+                                alignItems: 'center',
+                                paddingLeft: '0.75rem',
+                                color: 'white',
+                                fontSize: '0.8rem',
+                                fontWeight: '600'
+                              }}>
+                                {ward.name}
+                              </div>
+                            </div>
+                            <div style={{ fontSize: '0.875rem', fontWeight: '600', color: '#1e293b', minWidth: '50px', textAlign: 'right' }}>
+                              {ward.waste}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Ward Status Table */}
+                    <div style={{
+                      background: 'white',
+                      borderRadius: '12px',
+                      padding: '1.5rem',
+                      boxShadow: '0 2px 8px rgba(0,0,0,0.08)'
+                    }}>
+                      <h3 style={{ fontSize: '1.125rem', fontWeight: '700', color: '#1e293b', marginBottom: '0.5rem' }}>
+                        Ward Status Table
+                      </h3>
+                      <div style={{ fontSize: '0.875rem', color: '#64748b', marginBottom: '1.5rem' }}>Real-time ward overview</div>
+                      <div style={{ overflowX: 'auto' }}>
+                        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.875rem' }}>
+                          <thead>
+                            <tr style={{ borderBottom: '2px solid #e2e8f0' }}>
+                              <th style={{ padding: '0.75rem', textAlign: 'left', fontWeight: '700', color: '#64748b' }}>Ward</th>
+                              <th style={{ padding: '0.75rem', textAlign: 'left', fontWeight: '700', color: '#64748b' }}>Status</th>
+                              <th style={{ padding: '0.75rem', textAlign: 'right', fontWeight: '700', color: '#64748b' }}>Waste (tons)</th>
+                              <th style={{ padding: '0.75rem', textAlign: 'right', fontWeight: '700', color: '#64748b' }}>Complaints</th>
+                              <th style={{ padding: '0.75rem', textAlign: 'right', fontWeight: '700', color: '#64748b' }}>Trucks</th>
+                              <th style={{ padding: '0.75rem', textAlign: 'center', fontWeight: '700', color: '#64748b' }}>Risk (24h)</th>
+                              <th style={{ padding: '0.75rem', textAlign: 'center', fontWeight: '700', color: '#64748b' }}>Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {wards.slice(0, 7).map((ward) => (
+                              <tr key={ward.name} style={{ borderBottom: '1px solid #f1f5f9' }}>
+                                <td style={{ padding: '0.75rem', fontWeight: '600', color: '#1e293b' }}>{ward.name}</td>
+                                <td style={{ padding: '0.75rem' }}>
+                                  <span style={{
+                                    padding: '0.25rem 0.75rem',
+                                    borderRadius: '6px',
+                                    fontSize: '0.75rem',
+                                    fontWeight: '600',
+                                    background: ward.status === 'urgent' ? '#fee2e2' : ward.status === 'rising' ? '#fed7aa' : ward.status === 'watch' ? '#fef3c7' : '#d1fae5',
+                                    color: ward.status === 'urgent' ? '#991b1b' : ward.status === 'rising' ? '#9a3412' : ward.status === 'watch' ? '#92400e' : '#065f46'
+                                  }}>
+                                    {ward.status}
+                                  </span>
+                                </td>
+                                <td style={{ padding: '0.75rem', textAlign: 'right', fontWeight: '600' }}>{ward.waste}</td>
+                                <td style={{ padding: '0.75rem', textAlign: 'right' }}>{ward.complaints}</td>
+                                <td style={{ padding: '0.75rem', textAlign: 'right' }}>{ward.trucks}</td>
+                                <td style={{ padding: '0.75rem', textAlign: 'center' }}>
+                                  <span style={{
+                                    fontWeight: '600',
+                                    color: ward.risk === 'High' ? '#dc2626' : ward.risk === 'Medium' ? '#ea580c' : '#16a34a'
+                                  }}>
+                                    {ward.risk}
+                                  </span>
+                                </td>
+                                <td style={{ padding: '0.75rem', textAlign: 'center' }}>
+                                  <button style={{
+                                    padding: '0.375rem 0.75rem',
+                                    background: '#eff6ff',
+                                    color: '#1e40af',
+                                    border: 'none',
+                                    borderRadius: '6px',
+                                    fontSize: '0.75rem',
+                                    fontWeight: '600',
+                                    cursor: 'pointer'
+                                  }}>
+                                    View Ward
+                                  </button>
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </main>
+
+                {/* Right Panel - AI Recommendations & Alerts */}
+                <aside style={{
+                  width: '380px',
+                  background: 'white',
+                  boxShadow: '-4px 0 12px rgba(0,0,0,0.05)',
+                  display: 'flex',
+                  flexDirection: 'column'
+                }}>
+                  <div style={{
+                    display: 'flex',
+                    borderBottom: '2px solid #e2e8f0',
+                    padding: '1rem 1.5rem',
+                    gap: '0.5rem'
+                  }}>
+                    <button
+                      onClick={() => setActiveTab('recommendations')}
+                      style={{
+                        flex: 1,
+                        padding: '0.75rem',
+                        background: activeTab === 'recommendations' ? 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)' : 'transparent',
+                        color: activeTab === 'recommendations' ? 'white' : '#64748b',
+                        border: 'none',
+                        borderRadius: '8px',
+                        fontSize: '0.875rem',
+                        fontWeight: '600',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '0.5rem',
+                        transition: 'all 0.2s'
+                      }}
+                    >
+                      <Zap size={16} />
+                      AI Recommendations
+                    </button>
+                    <button
+                      onClick={() => setActiveTab('alerts')}
+                      style={{
+                        flex: 1,
+                        padding: '0.75rem',
+                        background: activeTab === 'alerts' ? 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)' : 'transparent',
+                        color: activeTab === 'alerts' ? 'white' : '#64748b',
+                        border: 'none',
+                        borderRadius: '8px',
+                        fontSize: '0.875rem',
+                        fontWeight: '600',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '0.5rem',
+                        transition: 'all 0.2s',
+                        position: 'relative'
+                      }}
+                    >
+                      <Bell size={16} />
+                      Alerts
+                      {activeTab !== 'alerts' && (
+                        <span style={{
+                          position: 'absolute',
+                          top: '0.5rem',
+                          right: '0.5rem',
+                          width: '8px',
+                          height: '8px',
+                          background: '#ef4444',
+                          borderRadius: '50%'
+                        }} />
+                      )}
+                    </button>
+                  </div>
+
+                  <div style={{ flex: 1, overflowY: 'auto', padding: '1.5rem' }}>
+                    {activeTab === 'recommendations' ? (
+                      <>
+                        <div style={{ marginBottom: '1.5rem' }}>
+                          <h3 style={{ fontSize: '1.25rem', fontWeight: '700', color: '#1e293b', marginBottom: '0.5rem' }}>
+                            AI Action Suggestions
+                          </h3>
+                          <div style={{ fontSize: '0.875rem', color: '#64748b' }}>Updated 2 minutes ago</div>
+                        </div>
+
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                          {recommendations.map((rec, idx) => (
+                            <div
+                              key={idx}
+                              style={{
+                                background: 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)',
+                                borderRadius: '12px',
+                                padding: '1.25rem',
+                                border: '2px solid #e2e8f0',
+                                transition: 'all 0.2s'
+                              }}
+                            >
+                              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.75rem' }}>
+                                <div style={{ flex: 1 }}>
+                                  <div style={{ fontSize: '0.95rem', fontWeight: '700', color: '#1e293b', marginBottom: '0.5rem', lineHeight: '1.4' }}>
+                                    {rec.action}
+                                  </div>
+                                </div>
+                                <span style={{
+                                  padding: '0.25rem 0.625rem',
+                                  borderRadius: '6px',
+                                  fontSize: '0.7rem',
+                                  fontWeight: '700',
+                                  textTransform: 'uppercase',
+                                  letterSpacing: '0.05em',
+                                  background: rec.priority === 'CRITICAL' ? '#fee2e2' : rec.priority === 'HIGH' ? '#fed7aa' : '#fef3c7',
+                                  color: rec.priority === 'CRITICAL' ? '#991b1b' : rec.priority === 'HIGH' ? '#9a3412' : '#92400e'
+                                }}>
+                                  {rec.priority}
+                                </span>
+                              </div>
+                              <div style={{ fontSize: '0.8rem', color: '#475569', marginBottom: '0.75rem', lineHeight: '1.5' }}>
+                                {rec.details}
+                              </div>
+                              <div style={{ fontSize: '0.8rem', fontWeight: '600', color: '#64748b', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                <span>📦</span>
+                                {rec.resources}
+                              </div>
+                              <button style={{
+                                width: '100%',
+                                padding: '0.75rem',
+                                background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
+                                color: 'white',
+                                border: 'none',
+                                borderRadius: '8px',
+                                fontSize: '0.875rem',
+                                fontWeight: '600',
+                                cursor: 'pointer',
+                                transition: 'all 0.2s',
+                                boxShadow: '0 4px 12px rgba(59, 130, 246, 0.3)'
+                              }}>
+                                Assign Now
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <div style={{ marginBottom: '1.5rem' }}>
+                          <h3 style={{ fontSize: '1.25rem', fontWeight: '700', color: '#1e293b', marginBottom: '0.5rem' }}>
+                            Active Alerts
+                          </h3>
+                          <div style={{ fontSize: '0.875rem', color: '#64748b' }}>Real-time notifications</div>
+                        </div>
+
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                          {alerts.map((alert, idx) => (
+                            <div
+                              key={idx}
+                              style={{
+                                padding: '1rem',
+                                borderRadius: '10px',
+                                background: alert.type === 'emergency' ? '#fee2e2' : alert.type === 'warning' ? '#fef3c7' : alert.type === 'event' ? '#dbeafe' : '#f0fdf4',
+                                border: `2px solid ${alert.type === 'emergency' ? '#fca5a5' : alert.type === 'warning' ? '#fde68a' : alert.type === 'event' ? '#bfdbfe' : '#bbf7d0'}`,
+                                cursor: 'pointer',
+                                transition: 'all 0.2s'
+                              }}
+                            >
+                              <div style={{
+                                display: 'flex',
+                                alignItems: 'flex-start',
+                                gap: '0.75rem'
+                              }}>
+                                <div style={{ fontSize: '1.25rem' }}>
+                                  {alert.type === 'emergency' ? '🚨' : alert.type === 'warning' ? '⚠️' : alert.type === 'event' ? '📅' : 'ℹ️'}
+                                </div>
+                                <div style={{ flex: 1 }}>
+                                  <div style={{ fontSize: '0.875rem', fontWeight: '600', color: '#1e293b', marginBottom: '0.25rem', lineHeight: '1.4' }}>
+                                    {alert.text}
+                                  </div>
+                                  <div style={{ fontSize: '0.75rem', color: '#64748b' }}>
+                                    {alert.time}
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </>
+                    )}
+                  </div>
+                </aside>
+              </div>
+
+              <style>{`
+                @keyframes pulse {
+                  0%, 100% { opacity: 1; }
+                  50% { opacity: 0.5; }
+                }
+                button:hover {
+                  transform: translateY(-1px);
+                }
+                button:active {
+                  transform: translateY(0);
+                }
+              `}</style>
+            </div>
+          );
+        };
+
+        ReactDOM.render(<IWMDSSDashboard />, document.getElementById('root'));
+    </script>
+</body>
+</html>
