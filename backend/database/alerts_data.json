@@ -1,0 +1,71 @@
+{
+  "alerts": [
+    {
+      "id": 1,
+      "text": "Ward K waste level critical (+65% above normal)",
+      "type": "emergency",
+      "ward_code": "K",
+      "time": "5 min ago",
+      "severity": "high"
+    },
+    {
+      "id": 2,
+      "text": "Ward F waste level rising (+22%)",
+      "type": "warning",
+      "ward_code": "F",
+      "time": "12 min ago",
+      "severity": "medium"
+    },
+    {
+      "id": 3,
+      "text": "Complaint spike detected in Dadar Market",
+      "type": "info",
+      "ward_code": "F",
+      "time": "1 hour ago",
+      "severity": "medium"
+    },
+    {
+      "id": 4,
+      "text": "Event coming: Ganesh Chaturthi preparation needed",
+      "type": "event",
+      "ward_code": "D",
+      "time": "6 days",
+      "severity": "low"
+    }
+  ],
+  "dashboard_summary": {
+    "total_waste_today": 8472,
+    "total_waste_yesterday": 8234,
+    "wards_needing_attention": 3,
+    "wards_needing_attention_yesterday": 4,
+    "pending_complaints": 12,
+    "pending_complaints_yesterday": 20,
+    "active_emergencies": 2,
+    "active_emergencies_yesterday": 1,
+    "upcoming_events": 1,
+    "days_until_event": 6,
+    "risk_index": "Medium",
+    "risk_trend": "Stable",
+    "total_wards": 20,
+    "total_trucks": 160,
+    "trucks_active": 152
+  },
+  "waste_trend_7_days": [
+    {"day": "Mon", "date": "2024-02-19", "value": 8234},
+    {"day": "Tue", "date": "2024-02-20", "value": 8456},
+    {"day": "Wed", "date": "2024-02-21", "value": 8312},
+    {"day": "Thu", "date": "2024-02-22", "value": 8589},
+    {"day": "Fri", "date": "2024-02-23", "value": 8423},
+    {"day": "Sat", "date": "2024-02-24", "value": 8701},
+    {"day": "Sun", "date": "2024-02-25", "value": 8472}
+  ],
+  "complaints_trend_7_days": [
+    {"day": "Mon", "date": "2024-02-19", "value": 18},
+    {"day": "Tue", "date": "2024-02-20", "value": 22},
+    {"day": "Wed", "date": "2024-02-21", "value": 16},
+    {"day": "Thu", "date": "2024-02-22", "value": 28},
+    {"day": "Fri", "date": "2024-02-23", "value": 24},
+    {"day": "Sat", "date": "2024-02-24", "value": 19},
+    {"day": "Sun", "date": "2024-02-25", "value": 12}
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "recommendations": [
+    {
+      "id": 1,
+      "action": "Deploy 2 extra trucks to Ward K - Ghatkopar",
+      "priority": "CRITICAL",
+      "details": "Waste accumulation 45% above threshold (680 tons)",
+      "resources": "2 Additional Trucks",
+      "ward_code": "K",
+      "estimated_impact": "Reduce waste backlog by 35%"
+    },
+    {
+      "id": 2,
+      "action": "Deploy 2 extra trucks to Ward F - Dadar",
+      "priority": "CRITICAL",
+      "details": "High waste level (615 tons) with 12 complaints",
+      "resources": "2 Additional Trucks",
+      "ward_code": "F",
+      "estimated_impact": "Reduce waste backlog by 30%"
+    },
+    {
+      "id": 3,
+      "action": "Increase collection frequency in Dadar Market area",
+      "priority": "HIGH",
+      "details": "Complaint spike detected - 12 pending complaints",
+      "resources": "1 Additional Route",
+      "ward_code": "F",
+      "estimated_impact": "Resolve 8-10 complaints within 24 hours"
+    },
+    {
+      "id": 4,
+      "action": "Address complaint hotspot in Ward V - Vikhroli",
+      "priority": "HIGH",
+      "details": "10 complaints with rising waste levels (515 tons)",
+      "resources": "1 Inspection Team + 1 Truck",
+      "ward_code": "V",
+      "estimated_impact": "Prevent escalation to critical status"
+    },
+    {
+      "id": 5,
+      "action": "Prepare extra bins for upcoming Ganesh Chaturthi",
+      "priority": "MEDIUM",
+      "details": "Major festival in 6 days - expect 40% waste increase",
+      "resources": "50 Extra Bins + 3 Trucks",
+      "ward_code": "D",
+      "estimated_impact": "Handle festival waste surge efficiently"
+    },
+    {
+      "id": 6,
+      "action": "Reallocate 4 workers from Ward R to Ward L",
+      "priority": "MEDIUM",
+      "details": "Ward L showing increased demand, Ward R has excess capacity",
+      "resources": "4 Workers",
+      "ward_code": "L",
+      "estimated_impact": "Optimize resource utilization by 15%"
+    }
+  ]
+}

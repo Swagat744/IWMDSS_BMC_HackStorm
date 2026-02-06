@@ -1,0 +1,75 @@
+{
+  "events": [
+    {
+      "event_id": 1,
+      "event_name": "Ganesh Chaturthi",
+      "event_type": "Religious Festival",
+      "start_date": "2024-03-01",
+      "end_date": "2024-03-11",
+      "affected_wards": ["D", "F", "G", "J"],
+      "expected_waste_increase_percent": 40,
+      "footfall_estimate": 500000,
+      "status": "planned",
+      "days_until": 6
+    }
+  ],
+  "emergencies": [
+    {
+      "emergency_id": 1,
+      "type": "Waste Overflow",
+      "severity": "High",
+      "ward_code": "K",
+      "ward_name": "Ward K - Ghatkopar",
+      "description": "Multiple collection points overflowing",
+      "reported_at": "2024-02-25T14:30:00",
+      "status": "active",
+      "estimated_waste_tons": 150
+    },
+    {
+      "emergency_id": 2,
+      "type": "Equipment Failure",
+      "severity": "Medium",
+      "ward_code": "F",
+      "ward_name": "Ward F - Dadar",
+      "description": "2 trucks out of service due to breakdown",
+      "reported_at": "2024-02-25T10:15:00",
+      "status": "responding",
+      "estimated_waste_tons": 80
+    }
+  ],
+  "hotspots": [
+    {
+      "hotspot_id": 1,
+      "location_name": "Dadar Market",
+      "ward_code": "F",
+      "ward_name": "Ward F - Dadar",
+      "hotspot_score": 85,
+      "complaints_count": 12,
+      "avg_waste_per_day": 45,
+      "status": "active",
+      "recommended_action": "Increase collection frequency to twice daily"
+    },
+    {
+      "hotspot_id": 2,
+      "location_name": "Ghatkopar Station Area",
+      "ward_code": "K",
+      "ward_name": "Ward K - Ghatkopar",
+      "hotspot_score": 92,
+      "complaints_count": 15,
+      "avg_waste_per_day": 62,
+      "status": "active",
+      "recommended_action": "Deploy additional truck immediately"
+    },
+    {
+      "hotspot_id": 3,
+      "location_name": "Vikhroli Industrial Zone",
+      "ward_code": "V",
+      "ward_name": "Ward V - Vikhroli",
+      "hotspot_score": 78,
+      "complaints_count": 10,
+      "avg_waste_per_day": 38,
+      "status": "active",
+      "recommended_action": "Coordinate with industrial units for better segregation"
+    }
+  ]
+}

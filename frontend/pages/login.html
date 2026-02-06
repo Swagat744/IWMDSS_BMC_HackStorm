@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IWMDSS | Login</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* ================= PARTICLES ================= */
+.particles {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+.particle {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.12);
+    animation: float 18s infinite ease-in-out;
+}
+
+@keyframes float {
+    0% { transform: translateY(100vh); opacity: 0; }
+    20% { opacity: 1; }
+    100% { transform: translateY(-120vh); opacity: 0; }
+}
+
+/* ================= LOGIN CONTAINER ================= */
+.login-container {
+    background: white;
+    max-width: 900px;
+    width: 92%;
+    border-radius: 20px;
+    display: flex;
+    overflow: hidden;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+    position: relative;
+    z-index: 2;
+}
+
+/* ================= LEFT PANEL ================= */
+.login-left {
+    flex: 1;
+    padding: 60px 40px;
+    color: white;
+    background: linear-gradient(135deg, #2c3345, #5B8DEF);
+}
+
+.logo {
+    width: 56px;
+    height: 56px;
+    background: white;
+    color: #5B8DEF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.logo-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 40px;
+}
+
+.login-left h2 {
+    font-size: 30px;
+    margin-bottom: 14px;
+}
+
+.login-left p {
+    opacity: 0.95;
+    margin-bottom: 32px;
+}
+
+.feature {
+    background: rgba(255,255,255,0.12);
+    padding: 14px;
+    border-radius: 10px;
+    margin-bottom: 14px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+/* ================= RIGHT PANEL ================= */
+.login-right {
+    flex: 1;
+    padding: 60px 50px;
+}
+
+.login-right h2 {
+    font-size: 28px;
+    color: #2c3345;
+    margin-bottom: 8px;
+}
+
+.login-right p {
+    color: #64748b;
+    margin-bottom: 30px;
+}
+
+/* ================= FORM ================= */
+.form-group {
+    margin-bottom: 22px;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 6px;
+}
+
+.input-box {
+    position: relative;
+}
+
+.input-box span {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+input {
+    width: 100%;
+    padding: 14px 16px 14px 44px;
+    border-radius: 10px;
+    border: 2px solid #e2e8f0;
+    background: #f8fafc;
+    font-size: 15px;
+}
+
+input:focus {
+    outline: none;
+    border-color: #5B8DEF;
+    background: white;
+    box-shadow: 0 0 0 4px rgba(91,141,239,0.15);
+}
+
+.toggle-password {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+/* ================= OPTIONS ================= */
+.options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.options label {
+    font-weight: normal;
+    color: #64748b;
+}
+
+.login-btn {
+    width: 100%;
+    padding: 16px;
+    border-radius: 10px;
+    border: none;
+    background: linear-gradient(135deg, #5B8DEF, #4169e1);
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.login-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(91,141,239,0.4);
+}
+
+/* ================= ERROR ================= */
+.error {
+    background: #fee2e2;
+    color: #dc2626;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    display: none;
+}
+
+.error.show {
+    display: block;
+}
+
+/* ================= DEMO ================= */
+.demo {
+    margin-top: 26px;
+    background: #f8fafc;
+    padding: 14px;
+    border-radius: 10px;
+    border: 2px dashed #e2e8f0;
+    font-size: 14px;
+}
+
+/* ================= MOBILE ================= */
+@media (max-width: 768px) {
+    .login-container {
+        flex-direction: column;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="particles" id="particles"></div>
+
+<div class="login-container">
+
+    <!-- LEFT -->
+    <div class="login-left">
+        <div class="logo-row">
+            <div class="logo">IW</div>
+            <div>
+                <h3>IWMDSS</h3>
+                <small>Intelligent Waste Management</small>
+            </div>
+        </div>
+
+        <h2>Smart Waste Analytics</h2>
+        <p>Decision support system for Ichalkaranji Municipal Corporation</p>
+
+        <div class="feature">📊 Real-time Analytics</div>
+        <div class="feature">🗺️ Hotspot Detection</div>
+        <div class="feature">🤖 AI Recommendations</div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="login-right">
+        <h2>Sign In</h2>
+        <p>Access your dashboard</p>
+
+        <div class="error" id="errorMsg">Invalid username or password</div>
+
+        <form onsubmit="login(event)">
+            <div class="form-group">
+                <label>Username</label>
+                <div class="input-box">
+                    <span>👤</span>
+                    <input id="username" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Password</label>
+                <div class="input-box">
+                    <span>🔒</span>
+                    <input id="password" type="password" required>
+                    <button type="button" class="toggle-password" onclick="togglePassword(this)">👁️</button>
+                </div>
+            </div>
+
+            <div class="options">
+                <label><input type="checkbox" id="remember"> Remember me</label>
+                <a href="#" style="color:#5B8DEF;text-decoration:none;">Forgot?</a>
+            </div>
+
+            <button class="login-btn">Login</button>
+        </form>
+
+        <div class="demo">
+            <strong>Demo Login</strong><br>
+            Username: <b>admin</b><br>
+            Password: <b>admin123</b>
+        </div>
+    </div>
+</div>
+
+<script>
+/* PARTICLES */
+const box = document.getElementById("particles");
+for (let i = 0; i < 30; i++) {
+    const p = document.createElement("div");
+    p.className = "particle";
+    const size = Math.random() * 40 + 20;
+    p.style.width = p.style.height = size + "px";
+    p.style.left = Math.random() * 100 + "%";
+    p.style.animationDuration = Math.random() * 10 + 15 + "s";
+    box.appendChild(p);
+}
+
+/* PASSWORD TOGGLE */
+function togglePassword(btn) {
+    const pass = document.getElementById("password");
+    pass.type = pass.type === "password" ? "text" : "password";
+    btn.textContent = pass.type === "password" ? "🙈" : "👁️";
+}
+
+/* LOGIN */
+function login(e) {
+    e.preventDefault();
+    const u = username.value;
+    const p = password.value;
+
+    if (u === "admin" && p === "admin123") {
+        localStorage.setItem("iwmdss_login", "true");
+        window.location.href = "dashboard.html";
+    } else {
+        errorMsg.classList.add("show");
+        setTimeout(() => errorMsg.classList.remove("show"), 3000);
+    }
+}
+
+</script>
+
+</body>
+</html>

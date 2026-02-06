@@ -1,0 +1,70 @@
+IWMDSS_FINAL/
+│
+├── 📄 README.md                    # Complete project documentation
+├── ⚡ QUICK_START.md               # 2-minute setup guide
+│
+├── 📁 frontend/                    # Frontend Application
+│   │
+│   ├── 📁 pages/                   # HTML Pages (Open these in browser!)
+│   │   ├── dashboard.html          # 🏠 Main Dashboard
+│   │   ├── analytics.html          # 📊 Analytics Page
+│   │   └── events.html             # 📅 Events & Planning
+│   │
+│   ├── 📁 styles/                  # CSS Stylesheets (Design)
+│   │   ├── dashboard.css           # Dashboard styles
+│   │   ├── analytics.css           # Analytics styles
+│   │   └── events.css              # Events styles
+│   │
+│   └── 📁 scripts/                 # JavaScript/React Components (Logic)
+│       ├── dashboard.jsx           # Dashboard React component
+│       ├── analytics.jsx           # Analytics React component
+│       └── events.jsx              # Events React component
+│
+├── 📁 backend/                     # Flask Backend API (Start this first!)
+│   │
+│   ├── app.py                      # 🚀 Main Flask server (Run: python app.py)
+│   ├── requirements.txt            # Python dependencies
+│   │
+│   └── 📁 database/                # Mock Data (JSON Files)
+│       ├── wards_data.json         # 20 Mumbai wards information
+│       ├── recommendations_data.json # AI recommendations
+│       ├── alerts_data.json        # Active alerts & trends
+│       └── events_data.json        # Events, emergencies, hotspots
+│
+└── 📁 docs/                        # Documentation
+    └── HOW_TO_RUN.md               # 📖 Complete demo guide
+
+═══════════════════════════════════════════════════════════════
+
+🚀 HOW TO RUN (2 STEPS):
+
+1. Start Backend:
+   cd backend
+   pip install Flask flask-cors
+   python app.py
+
+2. Open Frontend:
+   Open frontend/pages/dashboard.html in your browser
+
+✅ That's it! Your project is running!
+
+═══════════════════════════════════════════════════════════════
+
+📁 FILE ORGANIZATION:
+
+✅ HTML files → frontend/pages/
+✅ CSS files → frontend/styles/
+✅ JS/JSX files → frontend/scripts/
+✅ Database (JSON) → backend/database/
+✅ Python backend → backend/app.py
+
+═══════════════════════════════════════════════════════════════
+
+🎯 KEY FILES:
+
+- backend/app.py                    ← Start this!
+- frontend/pages/dashboard.html     ← Open this!
+- backend/database/*.json           ← All data here!
+- docs/HOW_TO_RUN.md               ← Demo guide!
+
+═══════════════════════════════════════════════════════════════
