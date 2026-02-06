@@ -1,0 +1,6 @@
+alert_type,severity,affected_wards,description,estimated_waste_tons
+flood,critical,S,Monsoon flooding debris,400
+fire,high,Z,Mall fire waste,150
+demolition,medium,R,Illegal building demolition,220
+health_outbreak,high,B,Biomedical waste surge,100
+accident,medium,A,Road accident debris,40

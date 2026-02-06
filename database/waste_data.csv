@@ -1,0 +1,8 @@
+ward_id,location_name,location_lat,location_lng,hotspot_score,avg_complaints_per_month,avg_waste_tons_per_day
+5,Juhu Slum Area,19.1123,72.8299,90,130,20
+5,Versova Beach,19.1356,72.8132,88,120,18
+6,Borivali Market,19.2310,72.8575,85,110,17
+7,Asalpha Slums,19.0842,72.9055,92,140,22
+2,Mazgaon Dock,18.9715,72.8442,78,95,14
+1,Colaba Fish Market,18.9060,72.8120,80,100,16
+4,Grant Road Station,18.9635,72.8180,82,105,15

@@ -1,0 +1,16 @@
+resource_type,resource_subtype,resource_code,assigned_ward_id,capacity_tons,status
+vehicle,compactor,MH01-CMP-111,1,10,deployed
+vehicle,compactor,MH01-CMP-112,1,10,available
+vehicle,tipper,MH02-TIP-211,2,8,deployed
+vehicle,tipper,MH02-TIP-212,2,8,available
+vehicle,compactor,MH03-CMP-311,3,9,maintenance
+vehicle,compactor,MH04-CMP-411,4,10,deployed
+vehicle,tipper,MH05-TIP-511,5,12,deployed
+vehicle,compactor,MH06-CMP-611,6,14,deployed
+vehicle,tipper,MH07-TIP-711,7,11,available
+bin,metal,BIN-A-101,1,1,available
+bin,plastic,BIN-Z-201,5,1,deployed
+bin,metal,BIN-R-301,6,1,available
+personnel,driver,EMP-1001,1,,deployed
+personnel,supervisor,EMP-1002,2,,available
+personnel,worker,EMP-1003,5,,deployed

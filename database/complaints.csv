@@ -1,0 +1,28 @@
+INSERT INTO citizen_complaints
+(ward_id, complaint_type, description, address, priority, status)
+VALUES
+(1,'overflow','Overflow near taxi stand','Colaba Taxi Stand','high','pending'),
+(1,'odor','Strong smell from open bin','Cuffe Parade','medium','assigned'),
+
+(2,'missed_collection','Morning pickup skipped','Mazgaon','high','pending'),
+(2,'illegal_dumping','Debris dumped roadside','Byculla West','critical','in_progress'),
+
+(3,'bin_damage','Bin lid broken','Marine Drive','low','resolved'),
+(3,'overflow','Bin full near station','Churchgate','medium','pending'),
+
+(4,'overflow','Waste outside shop','Grant Road East','medium','assigned'),
+(4,'odor','Rotten waste smell','Lamington Road','low','pending'),
+
+(5,'overflow','Festival waste pile','Lokhandwala','critical','pending'),
+(5,'illegal_dumping','Plastic dumping at night','Versova','high','assigned'),
+(5,'missed_collection','Truck breakdown','DN Nagar','medium','pending'),
+
+(6,'overflow','Market area waste','Borivali Market','high','pending'),
+(6,'bin_damage','Bin stolen','IC Colony','medium','resolved'),
+(6,'odor','Wet waste smell','Borivali West','low','pending'),
+
+(7,'missed_collection','Morning round missed','Ghatkopar East','high','assigned'),
+(7,'overflow','Waste near slum area','Asalpha','critical','pending'),
+(7,'illegal_dumping','Construction debris','Vikhroli Link Rd','high','in_progress'),
+(7,'odor','Drain smell','Pant Nagar','low','pending'),
+(7,'bin_damage','Damaged container','Tilak Nagar','medium','pending');
