@@ -1,13 +1,11 @@
-INSERT INTO events_calendar
-(event_name, event_type, start_date, end_date, affected_wards, expected_waste_increase_percent, footfall_estimate)
-VALUES
-('Ganesh Chaturthi','festival','2025-09-05','2025-09-15','A,B,C,D,Z',45,800000),
-('Navratri','festival','2025-10-03','2025-10-11','Z,R,S',30,500000),
-('Mumbai Marathon','sports','2025-01-21','2025-01-21','A,C,Z',20,70000),
-('IPL Screening','sports','2025-04-10','2025-05-25','Z,R',25,150000),
-('Election Rally','political','2025-03-18','2025-03-18','S',35,120000),
-('Street Food Festival','cultural','2025-02-14','2025-02-16','B,C',40,90000),
-('Night Bazaar','market','2025-01-10','2025-01-20','Z',30,110000),
-('Book Fair','cultural','2025-12-01','2025-12-10','A',15,50000),
-('Music Concert','cultural','2025-11-05','2025-11-05','R',28,60000),
-('Construction Drive','construction','2025-06-01','2025-08-30','S,R',20,0);
+event_id,event_name,location,date,participants
+1,Ganpati Visarjan,Ward A,2025-01-01,5000
+2,Diwali,Ward B,2025-01-08,800
+3,New Year Celebration,Ward C,2025-01-15,400
+4,Elections,Ward Z,2025-01-22,1200
+5,Holi,Ward T,2025-01-29,600
+6,Concert,Ward X,2025-02-05,300
+7,Navratri,Ward G,2025-02-12,200
+8,Cultural Event,Ward H,2025-02-19,900
+9,Eid at Mohammed Ali Road,Ward M,2025-02-26,700
+10,Weekends–Beaches,Ward A,2025-03-05,200
