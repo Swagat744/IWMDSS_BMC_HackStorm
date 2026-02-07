@@ -210,10 +210,11 @@ curl http://127.0.0.1:5000/api/wards
 
 ## 👥 Team
 
-- **[Your Team Member 1]** - Frontend Development
-- **[Your Team Member 2]** - Frontend Development  
-- **[Your Team Member 3]** - Backend Development
-- **[Your Team Member 4]** - Backend Development
+- **Team Name : HackStorm**
+- **Swgaat Patil**
+- **Sumit Barve**
+- **Prajusha Bamane**
+- **Gayatri Bajaj**
 
 ---
 
@@ -247,15 +248,6 @@ For your hackathon presentation, see `docs/HOW_TO_RUN.md` for:
 - 📊 Historical data analysis
 - 🔐 User authentication & roles
 
----
-
-## 📞 Support
-
-For issues or questions during the hackathon:
-- Check `docs/HOW_TO_RUN.md`
-- Verify backend is running (`python app.py`)
-- Check browser console for errors
-- Ensure all files are in correct folders
 
 ---
 
@@ -264,18 +256,3 @@ For issues or questions during the hackathon:
 This project was created for BMC Hackathon 2024.
 
 ---
-
-## 🎉 Good Luck!
-
-**May the code be with you!** 🚀
-
-Remember:
-- ✅ Test before demo
-- ✅ Keep backend running
-- ✅ Have backup plan
-- ✅ Explain the problem you're solving
-- ✅ Show the impact on BMC operations
-
----
-
-**Built with ❤️ for Mumbai's Waste Management**
