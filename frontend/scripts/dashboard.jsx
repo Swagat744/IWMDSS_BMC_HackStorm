@@ -1,6 +1,5 @@
 const { useState, useMemo, useEffect } = React;
 
-/* ICONS (same as your html) */
 const { Bell, User, Download, Search, TrendingUp, TrendingDown, AlertTriangle, Calendar, Navigation, Zap } = {
   Bell: ({ size, color, style }) => (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color || "currentColor"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={style}>
@@ -333,18 +332,121 @@ const IWMDSSDashboard = () => {
   /* ---------------------------
      Summary Cards
   ---------------------------- */
+
+  const TrashIcon = ({ size = 24 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
+       stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+       
+    <path d="M10 11v6" />
+    <path d="M14 11v6" />
+    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
+    <path d="M3 6h18" />
+    <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+  </svg>
+);
+
+const AttentionIcon = ({ size = 24, className = "" }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+    aria-hidden="true"
+  >
+    <circle cx="12" cy="12" r="10"></circle>
+    <line x1="12" x2="12" y1="8" y2="12"></line>
+    <line x1="12" x2="12.01" y1="16" y2="16"></line>
+  </svg>
+);
+
+const ComplaintIcon = ({ size = 24, className = "" }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+    aria-hidden="true"
+  >
+    <path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" />
+    <path d="M14 2v5a1 1 0 0 0 1 1h5" />
+    <path d="M10 9H8" />
+    <path d="M16 13H8" />
+    <path d="M16 17H8" />
+  </svg>
+);
+
+const CalendarIcon = ({ size = 24 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
+       stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="3" y="4" width="18" height="18" rx="2" />
+    <path d="M8 2v4M16 2v4M3 10h18" />
+   
+  </svg>
+);
+
+const RiskTrendIcon = ({ size = 24, className = "" }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+    aria-hidden="true"
+  >
+    <path d="M16 7h6v6" />
+    <path d="m22 7-8.5 8.5-5-5L2 17" />
+  </svg>
+);
+
+const EmergenciIcon = ({ size = 24, className = "" }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+    aria-hidden="true"
+  >
+    <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3" />
+    <path d="M12 9v4" />
+    <path d="M12 17h.01" />
+  </svg>
+);
+
   const summaryCards = useMemo(() => {
     const totalWaste = wardsWithMeta.reduce((sum, w) => sum + (w.waste || 0), 0);
     const wardsNeedingAttention = wardsWithMeta.filter((w) => w.status === "urgent" || w.status === "rising").length;
     const totalComplaints = wardsWithMeta.reduce((sum, w) => sum + (w.complaints || 0), 0);
 
     return [
-      { label: "Total Waste Collected", value: totalWaste.toLocaleString(), unit: "tons", trend: "Live", trendUp: null, icon: "🗑️" },
-      { label: "Wards Needing Attention", value: wardsNeedingAttention, unit: "wards", trend: "Auto", trendUp: null, icon: "⚠️" },
-      { label: "Pending Complaints", value: totalComplaints, unit: "pending", trend: "Live", trendUp: null, icon: "📋" },
-      { label: "Active Emergencies", value: "2", unit: "ongoing", trend: "+1", trendUp: true, icon: "🚨" },
-      { label: "Upcoming Events", value: "1", unit: "major event", trend: "6 days", trendUp: null, icon: "📅" },
-      { label: "Risk Index", value: wardsNeedingAttention >= 6 ? "High" : wardsNeedingAttention >= 3 ? "Medium" : "Low", unit: "prediction", trend: "Auto", trendUp: null, icon: "📊" }
+      { label: "Total Waste Collected", value: totalWaste.toLocaleString(), unit: "tons", trend: "Live", trendUp: null, icon: <TrashIcon/> },
+      { label: "Wards Needing Attention", value: wardsNeedingAttention, unit: "wards", trend: "Auto", trendUp: null, icon: <AttentionIcon/> },
+      { label: "Pending Complaints", value: totalComplaints, unit: "pending", trend: "Live", trendUp: null, icon: <ComplaintIcon/>  },
+      { label: "Active Emergencies", value: "2", unit: "ongoing", trend: "+1", trendUp: true, icon: <EmergenciIcon/> },
+      { label: "Upcoming Events", value: "1", unit: "major event", trend: "6 days", trendUp: null, icon: <CalendarIcon/>  },
+      { label: "Risk Index", value: wardsNeedingAttention >= 6 ? "High" : wardsNeedingAttention >= 3 ? "Medium" : "Low", unit: "prediction", trend: "Auto", trendUp: null, icon: <RiskTrendIcon/>  }
     ];
   }, [wardsWithMeta]);
 
@@ -598,25 +700,8 @@ const IWMDSSDashboard = () => {
                 { id: "event", label: "Event Planning", icon: <EventIcon />, href: "events.html" },
                 { id: "emergency", label: "Emergency Response", icon: <EmergencyIcon />, href: "hotspots.html" }
               ].map((mode) => (
-                <a
-                  key={mode.id}
-                  href={mode.href}
-                  style={{ textDecoration: "none" }}
-                >
-                  <button
-                    style={{
-                      width: "100%",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "10px",
-                      padding: "10px 14px",
-                      borderRadius: "12px",
-                      border: "1px solid #e2e8f0",
-                      background: "#ffffff",
-                      cursor: "pointer",
-                      fontWeight: 800
-                    }}
-                  >
+                <a key={mode.id} href={mode.href} style={{ textDecoration: "none" }}>
+                  <button className="mode-btn">
                     {mode.icon}
                     {mode.label}
                   </button>
@@ -624,6 +709,28 @@ const IWMDSSDashboard = () => {
               ))}
             </div>
           </div>
+
+            <style>{`
+            .mode-btn {
+              width: 100%;
+              display: flex;
+              align-items: center;
+              gap: 10px;
+              padding: 10px 14px;
+              border-radius: 12px;
+              border: 1px solid #e2e8f0;
+              background: #ffffff;
+              cursor: pointer;
+              font-weight: 800;
+              transition: all 0.2s;
+            }
+
+            .mode-btn:hover {
+              background: #eff6ff;
+              border-color: #3b82f6;
+              transform: translateY(-1px);
+            }
+          `}</style>
 
           <div>
             <h3 style={{ fontSize: "0.875rem", fontWeight: "700", color: "#64748b", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "1rem" }}>
